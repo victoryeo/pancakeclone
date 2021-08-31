@@ -1,6 +1,7 @@
 import React from 'react';
 import { Nav, Navbar, Form, FormControl } from 'react-bootstrap';
 import styled from 'styled-components';
+import { ConnectWallet } from './ConnectWallet';
 
 const Styles = styled.div`
   .navbar { background-color: #222; }
@@ -28,6 +29,10 @@ export const NavigationBar = () => (
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
           <Nav.Item><Nav.Link href="/about">About</Nav.Link></Nav.Item>
+          <Nav.Item>
+          <ConnectWallet 
+          />
+          </Nav.Item>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
