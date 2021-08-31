@@ -9,8 +9,8 @@ const GridWrapper = styled.div`
   grid-template-columns: repeat(12, 1fr);
   grid-auto-rows: minmax(25px, auto);
 `; 
-export const About = () => (
+export const Settings = () => (
   <GridWrapper>
-    <p>Pancake swap clone</p>
+    <p>Pancake swap settings</p>
   </GridWrapper>
 )

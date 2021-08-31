@@ -4,7 +4,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { NavigationBar } from './components/NavigationBar';
 import { Home } from './pages/Home';
-import { About } from './pages/About';
+import { Settings } from './pages/Settings';
 import { Trade } from './pages/Trade';
 import { Pool } from './pages/Pool';
 import SideBar from './components/SideBar';
@@ -21,7 +21,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/trade" component={Trade} />
           <Route path="/pool" component={Pool} />
-          <Route path="/about" component={About} />
+          <Route path="/settings" component={Settings} />
         </Switch>
       </Router>
     </React.Fragment>
