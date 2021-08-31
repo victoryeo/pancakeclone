@@ -2,6 +2,7 @@ import React from 'react';
 import { Nav, Navbar, Form, FormControl } from 'react-bootstrap';
 import styled from 'styled-components';
 import { ConnectWallet } from './ConnectWallet';
+import swaplogo from '../assets/theswaplogo.png'
 
 const Styles = styled.div`
   .navbar { background-color: #222; }
@@ -24,6 +25,7 @@ const Styles = styled.div`
 export const NavigationBar = () => (
   <Styles>
     <Navbar expand="lg">
+      <img src={swaplogo} height='32' alt="" align='left'/>
       <Navbar.Brand href="/">The Swap</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav"/>
       <Navbar.Collapse id="basic-navbar-nav">
