@@ -1,11 +1,11 @@
 import React from "react";
-import swaplogo from '../assets/theswap.png'
+import connectMetamaskWallet from "../web3/connectMetamaskWallet";
 
 export class ConnectWallet extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedAddress: null
+      selectedAddress: undefined
     }
   }
 
@@ -13,6 +13,16 @@ export class ConnectWallet extends React.Component {
     this.setState({
       selectedAddress: address
     })
+  }
+
+  connectWallet = async() => {
+    let userAddr
+    console.log(this.state.selectedAddress)
+    if (this.state.selectedAddress === undefined) {
+      userAddr = await connectMetamaskWallet()
+    } 
+    console.log(userAddr)
+    this.setState({selectedAddress: userAddr})
   }
 
   render() {
@@ -28,7 +38,7 @@ export class ConnectWallet extends React.Component {
             <button
               className="btn btn-warning"
               type="button"
-              onClick={this.props.connectWallet}
+              onClick={this.connectWallet}
             >
               {this.state.selectedAddress ? this.state.selectedAddress : "Connect"}
             </button>
