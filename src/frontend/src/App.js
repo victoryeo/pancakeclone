@@ -9,9 +9,12 @@ import { Trade } from './pages/Trade';
 import { Pool } from './pages/Pool';
 import SideBar from './components/SideBar';
 import getWeb3 from './web3/getWeb3'
+import { useDispatch } from 'react-redux'
+import { STPupdateAcct } from './actions/actions.js'
 
 const App = () => {
   const [myWeb3, setMyWeb3] = useState();
+  const dispatch = useDispatch()
 
   useEffect(() => {
     console.log('component mounted');
@@ -34,6 +37,7 @@ const App = () => {
       console.log(myWeb3.eth)
       let accounts = await myWeb3.eth.getAccounts()
       console.log(accounts[0])
+      dispatch(STPupdateAcct(accounts[0]))
     }
     //wait for myWeb3 to be initialised, before calling getAcct
     if (myWeb3 != undefined) {
