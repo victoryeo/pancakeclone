@@ -35,6 +35,7 @@ const App = () => {
       let accounts = await myWeb3.eth.getAccounts()
       console.log(accounts[0])
     }
+    //wait for myWeb3 to be initialised, before calling getAcct
     if (myWeb3 != undefined) {
       getAcct()
     }
