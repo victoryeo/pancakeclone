@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit'
 
-const actionTypes = {
+export const actionTypes = {
   UPDATE_DUMMY : 'UPDATE_DUMMY',
 }
 

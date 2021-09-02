@@ -7,8 +7,12 @@ export const initialState = {
 
 export const reducers = createReducer(initialState, (builder) => {
   builder.addCase(STPupdateDummy, (state , action) => {
+    console.log(state.dummy)
     console.log(action)
-    state = state + action.payload
+    return {
+      ...state,
+      dummy: action.payload,
+    };
   })
 })
 
