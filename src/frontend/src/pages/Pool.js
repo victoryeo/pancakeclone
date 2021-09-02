@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { useDispatch, useStore } from 'react-redux'
 import {
@@ -17,12 +17,23 @@ function select(state) {
 }
 
 export const Pool = () => {
+  const [pname, setPname] = useState();
+
+  useEffect(() => {
+    console.log('Pool mounted');
+    setPname(select(store.getState()))
+    return () => console.log('Pool is being removed');
+  }, []);
+
   const dispatch = useDispatch()
   const store = useStore()
 
   return (<Wrapper>
-    <span>{select(store.getState())}</span>
-    <button onClick={() => dispatch( STPupdateDummy("test") )}>
+    <div>{pname}</div>
+    <button onClick={() => {
+      setPname("test")
+      dispatch(STPupdateDummy("test"))
+    }}>
       Update Pool
     </button>    
     </Wrapper>)
