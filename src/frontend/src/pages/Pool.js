@@ -13,6 +13,7 @@ const Wrapper = styled.div`
 
 export const Pool = () => {
   const [pname, setPname] = useState();
+  const [input, setInput] = useState('');
   const dummy = useSelector((state) => state.reducers.dummy)
 
   useEffect(() => {
@@ -27,9 +28,10 @@ export const Pool = () => {
 
   return (<Wrapper>
     <div>{pname}</div>
+    <input value={input} onInput={e => setInput(e.target.value)}/>
     <button onClick={() => {
-      setPname("test")
-      dispatch(STPupdateDummy("test"))
+      setPname(input)
+      dispatch(STPupdateDummy(input))
     }}>
       Update Pool
     </button>    
