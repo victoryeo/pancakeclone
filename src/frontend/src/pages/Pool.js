@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import { useDispatch, useStore } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   STPupdateDummy,
  } from '../actions/actions.js'
@@ -18,17 +18,17 @@ function select(state) {
 
 export const Pool = () => {
   const [pname, setPname] = useState();
+  const dummy = useSelector((state) => state.reducers.dummy)
 
   useEffect(() => {
     console.log('Pool mounted');
-    setPname(select(store.getState()))
+    setPname(dummy)
     return () => console.log('Pool is being removed');
     // the line below is used to fix warning message: React Hook useEffect has a missing dependency
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const dispatch = useDispatch()
-  const store = useStore()
 
   return (<Wrapper>
     <div>{pname}</div>
