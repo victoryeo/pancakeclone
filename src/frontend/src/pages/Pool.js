@@ -11,11 +11,6 @@ const Wrapper = styled.div`
   margin-right: 6em;
 `;
 
-function select(state) { 
-  console.log(state.reducers) 
-  return state.reducers.dummy
-}
-
 export const Pool = () => {
   const [pname, setPname] = useState();
   const dummy = useSelector((state) => state.reducers.dummy)
