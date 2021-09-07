@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.0;
 
 import './math/SafeMath.sol';
@@ -70,7 +72,7 @@ contract BnbStaking is Ownable {
         uint256 _bonusEndBlock,
         address _adminAddress,
         address _wbnb
-    ) public {
+    ) {
         rewardToken = _rewardToken;
         rewardPerBlock = _rewardPerBlock;
         startBlock = _startBlock;
