@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-import "./token/BEP20.sol";
+import "../lib/token/BEP20.sol";
 
 // CakeToken with Governance.
 contract CakeToken is BEP20('PancakeSwap Token', 'Cake') {

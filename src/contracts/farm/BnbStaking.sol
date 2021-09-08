@@ -2,10 +2,10 @@
 
 pragma solidity ^0.8.0;
 
-import './math/SafeMath.sol';
-import './token/IBEP20.sol';
-import './token/SafeBEP20.sol';
-import './access/Ownable.sol';
+import '../lib/math/SafeMath.sol';
+import '../lib/token/IBEP20.sol';
+import '../lib/token/SafeBEP20.sol';
+import '../lib/access/Ownable.sol';
 
 // import "@nomiclabs/buidler/console.sol";
 
