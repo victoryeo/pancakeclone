@@ -14,7 +14,7 @@ contract PancakePair is IPancakePair, PancakeERC20 {
     using SafeMath  for uint;
     using UQ112x112 for uint224;
 
-    uint public constant MINIMUM_LIQUIDITY = 10**3;
+    uint public constant _MINIMUM_LIQUIDITY = 10**3;
     bytes4 private constant SELECTOR = bytes4(keccak256(bytes('transfer(address,uint256)')));
 
     address public _factory;
@@ -37,7 +37,7 @@ contract PancakePair is IPancakePair, PancakeERC20 {
         unlocked = 1;
     }
 
-    function getReserves() public view returns (uint112 _reserve0, uint112 _reserve1, uint32 _blockTimestampLast) {
+    function getReserves() public override view returns (uint112 _reserve0, uint112 _reserve1, uint32 _blockTimestampLast) {
         _reserve0 = reserve0;
         _reserve1 = reserve1;
         _blockTimestampLast = blockTimestampLast;
@@ -65,41 +65,41 @@ contract PancakePair is IPancakePair, PancakeERC20 {
     }
 
 
-    function name() public override(IPancakePair) pure returns (string memory) {
+    /*function name() public override(IPancakePair, PancakeERC20) pure returns (string memory) {
         return _name;
-    }
+    }*/
 
-    function decimals() public override(IPancakePair) pure returns (uint8) {
+    /*function decimals() public override(IPancakePair, PancakeERC20) pure returns (uint8) {
         return _decimals;
     }
 
-    function symbol() public override(IPancakePair) pure returns (string memory) {
+    function symbol() public override(IPancakePair, PancakeERC20) pure returns (string memory) {
         return _symbol;
     }
 
-    function totalSupply() public override(IPancakePair) view returns (uint256) {
+    function totalSupply() public override(IPancakePair, PancakeERC20) view returns (uint256) {
         return _totalSupply;
     }
 
-    function allowance(address owner, address spender) public override(IPancakePair) view returns (uint256) {
+    function allowance(address owner, address spender) public override(IPancakePair, PancakeERC20) view returns (uint256) {
         return _allowance[owner][spender];
     }
 
-    function balanceOf(address account) public override(IPancakePair) view returns (uint256) {
+    function balanceOf(address account) public override(IPancakePair, PancakeERC20) view returns (uint256) {
         return _balanceOf[account];
     }
 
-    function nonces(address account) public override(IPancakePair) view returns (uint256) {
+    function nonces(address account) public override(IPancakePair, PancakeERC20) view returns (uint256) {
         return _nonces[account];
     }
 
-    function DOMAIN_SEPARATOR() external override(IPancakePair) view returns (bytes32) {
+    function DOMAIN_SEPARATOR() external override(IPancakePair, PancakeERC20) view returns (bytes32) {
       return _DOMAIN_SEPARATOR;
     }
 
-    function PERMIT_TYPEHASH() external override(IPancakePair) pure returns (bytes32) {
+    function PERMIT_TYPEHASH() external override(IPancakePair, PancakeERC20) pure returns (bytes32) {
         return _PERMIT_TYPEHASH;
-    }
+    }*/
 
     function factory() external override(IPancakePair) view returns (address) {
       return _factory;
@@ -120,13 +120,17 @@ contract PancakePair is IPancakePair, PancakeERC20 {
     function price1CumulativeLast() external override(IPancakePair) view returns (uint) {
       return _price1CumulativeLast;
     }
+
     function kLast() external override(IPancakePair) view returns (uint) {
       return _kLast;
     }
 
+    function MINIMUM_LIQUIDITY() external override(IPancakePair) pure returns (uint) {
+      return _MINIMUM_LIQUIDITY;
+    }
 
     // called once by the factory at time of deployment
-    function initialize(address token0_, address token1_) external {
+    function initialize(address token0_, address token1_) external override {
         require(msg.sender == _factory, 'Pancake: FORBIDDEN'); // sufficient check
         _token0 = token0_;
         _token1 = token1_;
@@ -134,7 +138,7 @@ contract PancakePair is IPancakePair, PancakeERC20 {
 
     // update reserves and, on the first call per block, price accumulators
     function _update(uint balance0, uint balance1, uint112 _reserve0, uint112 _reserve1) private {
-        require(balance0 <= uint112(-1) && balance1 <= uint112(-1), 'Pancake: OVERFLOW');
+        require(balance0 <= type(uint112).max && balance1 <= type(uint112).max, 'Pancake: OVERFLOW');
         uint32 blockTimestamp = uint32(block.timestamp % 2**32);
         uint32 timeElapsed = blockTimestamp - blockTimestampLast; // overflow is desired
         if (timeElapsed > 0 && _reserve0 != 0 && _reserve1 != 0) {
@@ -180,8 +184,8 @@ contract PancakePair is IPancakePair, PancakeERC20 {
         bool feeOn = _mintFee(_reserve0, _reserve1);
         //uint _totalSupply = totalSupply; // gas savings, must be defined here since totalSupply can update in _mintFee
         if (_totalSupply == 0) {
-            liquidity = Math.sqrt(amount0.mul(amount1)).sub(MINIMUM_LIQUIDITY);
-           _mint(address(0), MINIMUM_LIQUIDITY); // permanently lock the first MINIMUM_LIQUIDITY tokens
+            liquidity = Math.sqrt(amount0.mul(amount1)).sub(_MINIMUM_LIQUIDITY);
+           _mint(address(0), _MINIMUM_LIQUIDITY); // permanently lock the first _MINIMUM_LIQUIDITY tokens
         } else {
             liquidity = Math.min(amount0.mul(_totalSupply) / _reserve0, amount1.mul(_totalSupply) / _reserve1);
         }
