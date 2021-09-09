@@ -65,11 +65,11 @@ contract PancakePair is IPancakePair, PancakeERC20 {
     }
 
 
-    /*function name() public override(IPancakePair, PancakeERC20) pure returns (string memory) {
+    function name() public override(IPancakePair, PancakeERC20) pure returns (string memory) {
         return _name;
-    }*/
+    }
 
-    /*function decimals() public override(IPancakePair, PancakeERC20) pure returns (uint8) {
+    function decimals() public override(IPancakePair, PancakeERC20) pure returns (uint8) {
         return _decimals;
     }
 
@@ -99,7 +99,7 @@ contract PancakePair is IPancakePair, PancakeERC20 {
 
     function PERMIT_TYPEHASH() external override(IPancakePair, PancakeERC20) pure returns (bytes32) {
         return _PERMIT_TYPEHASH;
-    }*/
+    }
 
     function factory() external override(IPancakePair) view returns (address) {
       return _factory;

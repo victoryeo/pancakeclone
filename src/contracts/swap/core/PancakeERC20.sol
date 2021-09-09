@@ -39,39 +39,39 @@ contract PancakeERC20 is IPancakeERC20 {
         );
     }
 
-    function name() public override pure returns (string memory) {
+    function name() public override virtual pure returns (string memory) {
         return _name;
     }
 
-    function decimals() public override pure returns (uint8) {
+    function decimals() public override virtual pure returns (uint8) {
         return _decimals;
     }
 
-    function symbol() public override pure returns (string memory) {
+    function symbol() public override virtual pure returns (string memory) {
         return _symbol;
     }
 
-    function totalSupply() public override view returns (uint256) {
+    function totalSupply() public override virtual view returns (uint256) {
         return _totalSupply;
     }
 
-    function allowance(address owner, address spender) public override view returns (uint256) {
+    function allowance(address owner, address spender) public override virtual view returns (uint256) {
         return _allowance[owner][spender];
     }
 
-    function balanceOf(address account) public override view returns (uint256) {
+    function balanceOf(address account) public override virtual view returns (uint256) {
         return _balanceOf[account];
     }
 
-    function nonces(address account) public override view returns (uint256) {
+    function nonces(address account) public override virtual view returns (uint256) {
         return _nonces[account];
     }
 
-    function DOMAIN_SEPARATOR() external override view returns (bytes32) {
+    function DOMAIN_SEPARATOR() external override virtual view returns (bytes32) {
       return _DOMAIN_SEPARATOR;
     }
 
-    function PERMIT_TYPEHASH() external override pure returns (bytes32) {
+    function PERMIT_TYPEHASH() external override virtual pure returns (bytes32) {
         return _PERMIT_TYPEHASH;
     }
 
