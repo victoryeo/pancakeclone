@@ -20,11 +20,17 @@ async function main() {
   console.log("the contract address:", caketoken.address);
 
   // deploy staking
-  const Con01 = await ethers.getContractFactory("BnbStaking");
+  const BnbStaking = await ethers.getContractFactory("BnbStaking");
   console.log('Deploying ...');
-  const con01 = await Con01.deploy(wbnb.address, caketoken.address,
+  const bnbstaking = await BnbStaking.deploy(wbnb.address, caketoken.address,
     1000,10,1010, deployer.address, wbnb.address);
-  console.log("the contract address:", con01.address);
+  console.log("the contract address:", bnbstaking.address);
+
+  // deploy erc20
+  const PancakeERC20 = await ethers.getContractFactory("PancakeERC20");
+  console.log('Deploying ...');
+  const pancakeerc20 = await PancakeERC20.deploy();
+  console.log("the contract address:", pancakeerc20.address);
 }
 
 main()
