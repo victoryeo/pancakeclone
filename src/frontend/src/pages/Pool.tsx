@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  STPupdateDummy,
- } from '../actions/actions'
+import { STPupdateDummy } from '../actions/actions'
 import { RootState } from '../reducers';
 
 const Wrapper = styled.div`
@@ -13,9 +11,9 @@ const Wrapper = styled.div`
 `;
 
 export const Pool = () => {
-  const [pname, setPname] = useState();
-  const [input, setInput] = useState('');
-  const dummy = useSelector((state: RootState) => state.reducers.dummy)
+  const [pname, setPname] = useState<string|null>(null);
+  const [input, setInput] = useState<string>('');
+  const dummy:string = useSelector((state: RootState) => state.reducers.dummy)
 
   useEffect(() => {
     console.log('Pool mounted');
@@ -29,7 +27,7 @@ export const Pool = () => {
 
   return (<Wrapper>
     <div>{pname}</div>
-    <input value={input} onInput={e => setInput(e.target.value)}/>
+    <input value={input} onInput={e => setInput((e.target as HTMLTextAreaElement).value)}/>
     <button onClick={() => {
       setPname(input)
       dispatch(STPupdateDummy(input))

@@ -35,7 +35,7 @@ const App = () => {
     console.log(myWeb3)
     async function getAcct() {
       console.log(myWeb3?.eth)
-      let accounts = await myWeb3?.eth.getAccounts()
+      let accounts: number[] = await myWeb3?.eth.getAccounts()
       console.log(accounts[0])
       dispatch(STPupdateAcct(accounts[0]))
     }
