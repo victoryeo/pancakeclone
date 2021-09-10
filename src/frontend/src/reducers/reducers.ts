@@ -1,10 +1,15 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { STPupdateDummy, STPupdateAcct } from '../actions/actions'
 
-export const initialState = {
-  dummy: 'none',
-  acct:  0x0,
+export interface AppState {
+  dummy: string,
+  acct:  number,
 }
+
+const initialState: AppState = {
+  dummy: 'none',
+  acct: 0x0,
+} 
 
 export const reducers = createReducer(initialState, (builder) => {
   builder

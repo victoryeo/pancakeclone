@@ -10,10 +10,10 @@ import { Pool } from './pages/Pool';
 import SideBar from './components/SideBar';
 import getWeb3 from './web3/getWeb3'
 import { useDispatch } from 'react-redux'
-import { STPupdateAcct } from './actions/actions.js'
+import { STPupdateAcct } from './actions/actions'
 
 const App = () => {
-  const [myWeb3, setMyWeb3] = useState();
+  const [myWeb3, setMyWeb3] = useState<any>();
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -34,8 +34,8 @@ const App = () => {
   useEffect(() => {
     console.log(myWeb3)
     async function getAcct() {
-      console.log(myWeb3.eth)
-      let accounts = await myWeb3.eth.getAccounts()
+      console.log(myWeb3?.eth)
+      let accounts = await myWeb3?.eth.getAccounts()
       console.log(accounts[0])
       dispatch(STPupdateAcct(accounts[0]))
     }

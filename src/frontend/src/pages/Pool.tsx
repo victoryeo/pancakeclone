@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux'
 import {
   STPupdateDummy,
- } from '../actions/actions.js'
+ } from '../actions/actions'
+import { RootState } from '../reducers';
 
 const Wrapper = styled.div`
   margin-top: 1em;
@@ -14,7 +15,7 @@ const Wrapper = styled.div`
 export const Pool = () => {
   const [pname, setPname] = useState();
   const [input, setInput] = useState('');
-  const dummy = useSelector((state) => state.reducers.dummy)
+  const dummy = useSelector((state: RootState) => state.reducers.dummy)
 
   useEffect(() => {
     console.log('Pool mounted');
