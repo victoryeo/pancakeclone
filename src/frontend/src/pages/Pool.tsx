@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import styled from 'styled-components';
+import React, {useEffect, useState} from 'react'
+import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { STPupdateDummy } from '../actions/actions'
-import { RootState } from '../reducers';
+import { RootState } from '../reducers'
+import { useCake } from '../contracts/useContracts'
 
 const Wrapper = styled.div`
   margin-top: 1em;
@@ -14,6 +15,7 @@ export const Pool = () => {
   const [pname, setPname] = useState<string|null>(null);
   const [input, setInput] = useState<string>('');
   const dummy:string = useSelector((state: RootState) => state.reducers.dummy)
+  const cakeContract = useCake()
 
   useEffect(() => {
     console.log('Pool mounted');
