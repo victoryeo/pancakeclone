@@ -1,6 +1,13 @@
 import Web3 from 'web3'
 import { ganachehost } from './constants'
 
+declare global {
+  interface Window {
+      ethereum:any;
+      web3: any;
+  }
+}
+
 const getWeb3 = new Promise(resolve => {
   console.log("addEventListener")
   // Wait for loading completion to avoid race conditions with web3 injection timing.
