@@ -25,7 +25,7 @@ const Styles = styled.div`
 export const NavigationBar = () => (
   <Styles>
     <Navbar expand="lg">
-      <img src={swaplogo} height='32' alt="" align='left'/>
+      <img src={swaplogo} height='32' alt="" data-align='left'/>
       <Navbar.Brand href="/">The Swap</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav"/>
       <Navbar.Collapse id="basic-navbar-nav">

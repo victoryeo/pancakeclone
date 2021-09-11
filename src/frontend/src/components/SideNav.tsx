@@ -1,8 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BrowserRouter as Router, Route, Link, withRouter } from "react-router-dom";
+import { BrowserRouter as Router, Link, withRouter, RouteComponentProps } from "react-router-dom";
 
-const StyledNavItem = styled.div`
+interface Container_DIV {
+  active: boolean
+}
+
+const StyledNavItem = styled.div<Container_DIV>`
   height: 70px;
   width: 75px; /* width must be same size as NavBar to center */
   text-align: center; /* Aligns <a> inside of NavIcon div */
@@ -17,7 +21,15 @@ const StyledNavItem = styled.div`
   }
 `;
 
-class NavItem extends React.Component {
+interface NIProps {
+  path: string
+  onItemClick: (path: string) => void
+  active: boolean
+  css: string
+  name: string
+}
+
+class NavItem extends React.Component<NIProps> {
   handleClick = () => {
     const { path, onItemClick } = this.props;
     onItemClick(path);
@@ -50,8 +62,23 @@ const StyledSideNav = styled.div`
   padding-top: 10px;
 `;
 
-class SideNav extends React.Component {
-  constructor(props) {
+interface SNProps {
+}
+
+export interface StateItems { 
+  path: string
+  name: string
+  css: string
+  key: number
+}
+
+interface SNState {
+  activePath?: string
+  items: StateItems[]
+}
+
+class SideNav extends React.Component<SNProps & RouteComponentProps, SNState> {
+  constructor(props: any) {
     super(props);
     this.state = {
       activePath: props.location.pathname,
@@ -78,7 +105,7 @@ class SideNav extends React.Component {
     }
   }
 
-onItemClick = (path) => {
+onItemClick = (path: string) => {
   this.setState({ activePath: path });
 }
 

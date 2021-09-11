@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux'
+import { RootState } from '../reducers/index';
 
 const Wrapper = styled.div`
   margin-top: 1em;
@@ -9,7 +10,7 @@ const Wrapper = styled.div`
 `;
 
 export const Trade = () => {
-  const acct = useSelector((state) => state.reducers.acct)
+  const acct = useSelector((state: RootState) => state.reducers.acct)
   console.log(acct)
   return (
     <Wrapper>

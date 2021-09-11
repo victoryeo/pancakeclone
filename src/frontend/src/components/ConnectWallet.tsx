@@ -1,17 +1,24 @@
 import React from "react";
 import connectMetamaskWallet from "../web3/connectMetamaskWallet";
 
-export class ConnectWallet extends React.Component {
-  constructor(props) {
+interface CWProps {
+}
+
+interface CWState {
+  selectedAddress?: number;
+}
+
+export class ConnectWallet extends React.Component<CWProps, CWState> {
+  constructor(props: any) {
     super(props)
     this.state = {
       selectedAddress: undefined
     }
   }
 
-  changeAddress = (address) => {
+  changeAddress = (address: number) => {
     this.setState({
-      selectedAddress: address
+      selectedAddress: address  
     })
   }
 

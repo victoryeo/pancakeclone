@@ -10,7 +10,7 @@ const connectMetamaskWallet = async () => {
 
     console.log(selectedAddress)
     return selectedAddress
-  } catch (error) {
+  } catch (error: any) {
     if (error.code === 4001) {
       // EIP-1193 userRejectedRequest error
       console.log('Please connect to MetaMask.');
