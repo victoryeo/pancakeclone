@@ -8,11 +8,11 @@ declare global {
   }
 }
 
-const getWeb3 = new Promise(resolve => {
+const getWeb3: Promise<object> = new Promise(resolve => {
   console.log("addEventListener")
   // Wait for loading completion to avoid race conditions with web3 injection timing.
   window.addEventListener('load', dispatch => {
-    let results
+    let results: object
     // Metamask no longer injects web3
     //console.log("web3 " + window.web3)
     if (window.ethereum) {

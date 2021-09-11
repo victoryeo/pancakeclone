@@ -10,7 +10,7 @@ import { Pool } from './pages/Pool';
 import SideBar from './components/SideBar';
 import getWeb3 from './web3/getWeb3'
 import { useDispatch } from 'react-redux'
-import { STPupdateAcct } from './actions/actions'
+import { STPupdateAcct, STPupdateWeb3 } from './actions/actions'
 
 const App = () => {
   const [myWeb3, setMyWeb3] = useState<any>();
@@ -20,9 +20,10 @@ const App = () => {
     console.log('component mounted');
     async function getW3() {
       try {
-        let web3 = await getWeb3
+        let web3: object = await getWeb3
         console.log(web3)
         setMyWeb3(web3)
+        dispatch(STPupdateWeb3(web3))
       } catch( err ) {
         console.warn('Error in web3 initialization.', err)
       }

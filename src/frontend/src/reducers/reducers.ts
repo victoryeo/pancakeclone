@@ -1,14 +1,16 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { STPupdateDummy, STPupdateAcct } from '../actions/actions'
+import { STPupdateDummy, STPupdateAcct, STPupdateWeb3 } from '../actions/actions'
 
 export interface AppState {
   dummy: string,
   acct:  number,
+  web3: object,
 }
 
 const initialState: AppState = {
   dummy: 'none',
   acct: 0x0,
+  web3: {},
 } 
 
 export const reducers = createReducer(initialState, (builder) => {
@@ -27,6 +29,14 @@ export const reducers = createReducer(initialState, (builder) => {
       return {
         ...state,
         acct: action.payload,
+      };
+    })
+    .addCase(STPupdateWeb3, (state , action) => {
+      console.log(state.web3)
+      console.log(action)
+      return {
+        ...state,
+        web3: action.payload,
       };
     })    
 })
