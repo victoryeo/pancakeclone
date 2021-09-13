@@ -1,21 +1,20 @@
-import { ethers } from "hardhat"
-import { Signer, Contract } from "ethers"
+import { Contract } from "ethers"
 import { MockProvider, deployContract } from 'ethereum-waffle'
-import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers"
 import { assert } from "chai";
+import { ethers } from "hardhat"
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers"
 
 import CakeToken from '../../../artifacts/src/contracts/pool/CakeToken.sol/CakeToken.json'
 
 describe("CakeToken", function () {
-  let accounts: Signer[]
   const provider = new MockProvider()
-  const [wallet, other] = provider.getWallets()
+  const [wallet, alice] = provider.getWallets()
   let token: Contract
-  let alice: SignerWithAddress
+  let bob: SignerWithAddress
   let minter: SignerWithAddress
 
   beforeEach(async function () {
-    [alice, minter] = await ethers.getSigners()
+    [bob, minter] = await ethers.getSigners()
     token = await deployContract(wallet, CakeToken, [])
   })
 
