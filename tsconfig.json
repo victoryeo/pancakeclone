@@ -5,6 +5,7 @@
     "strict": true,
     "esModuleInterop": true,
     "outDir": "dist",
+    "resolveJsonModule": true,
   },
   "include": ["./src/contracts", "./src/contracts/test", "./scripts"],
   "files": ["./hardhat.config.ts"]
