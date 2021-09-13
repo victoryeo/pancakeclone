@@ -1,10 +1,11 @@
-require("@nomiclabs/hardhat-waffle");
+import "@nomiclabs/hardhat-waffle";
+import { task } from "hardhat/config";
 
 const { mnemonic } = require('./secrets.json');
 
 // see https://hardhat.org/guides/create-task.html
-task("accounts", "Prints the list of accounts", async () => {
-  const accounts = await ethers.getSigners();
+task("accounts", "Prints the list of accounts", async (args, hre) => {
+  const accounts = await hre.ethers.getSigners();
 
   for (const account of accounts) {
     console.log(account.address);
@@ -14,7 +15,7 @@ task("accounts", "Prints the list of accounts", async () => {
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
-module.exports = {
+export default {
   solidity: {
     version: "0.8.4",
     evmVersion: "london"
