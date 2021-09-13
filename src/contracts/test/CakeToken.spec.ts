@@ -26,7 +26,7 @@ describe("CakeToken", function () {
     console.log(alice.address)
     let bal = await token.balanceOf(alice.address)
     console.log(bal.toString())
-    console.log(token)
+    //console.log(token)
     await token['mint(address,uint256)'](alice.address, 1000);
     assert.equal((await token.balanceOf(alice.address)).toString(), '1000');
   })
