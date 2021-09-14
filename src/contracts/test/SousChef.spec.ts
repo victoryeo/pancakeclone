@@ -29,9 +29,9 @@ describe("SousChef", function () {
     accounts = await ethers.getSigners();
     ct = await deployContract(wallet, CakeToken, [])
     sb = await deployContract(wallet, SyrupBar, [ct.address])
-    sc = await deployContract(wallet, SousChef, [sb.address, 40, 300, 400])
 
     mockBEP20 = await deployContract(wallet, MockBEP20, ['LPToken', 'LP1', '1000000']);
+    sc = await deployContract(wallet, SousChef, [mockBEP20.address, 40, 300, 400])
   })
 
   it('test', async () => {
@@ -45,8 +45,21 @@ describe("SousChef", function () {
     let bal = await mockBEP20.balanceOf(wallet.address)
     console.log(bal.toString())
     // transfer from owner to bob using mockBEP20 contract
-    await mockBEP20.transfer(bob.address, '1000', { from: wallet.address });
+    await mockBEP20.transfer(bob.address, '1000');
     assert.equal((await mockBEP20.balanceOf(bob.address)).toString(), '1000');
   })
 
+  it('test deposit', async () => {
+    // transfer from owner to bob
+    await mockBEP20.transfer(bob.address, '1000');
+    assert.equal((await mockBEP20.balanceOf(bob.address)).toString(), '1000');
+
+    await mockBEP20.connect(bob).approve(sc.address, '1000');
+    // deposit from bob to SousChef
+    await sc.connect(bob).deposit('10');
+    assert.equal(
+      (await mockBEP20.balanceOf(sc.address)).toString(),
+      '10'
+    );
+  })
 })
