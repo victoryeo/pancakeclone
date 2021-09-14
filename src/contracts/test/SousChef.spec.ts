@@ -1,4 +1,4 @@
-import { ethers } from "hardhat"
+import { ethers, waffle } from "hardhat"
 import { Signer } from "ethers"
 import { MockProvider, deployContract } from 'ethereum-waffle'
 import { Contract } from 'ethers'
@@ -21,6 +21,7 @@ describe("SousChef", function () {
     }
   }
   const provider = new MockProvider(options)
+  //const provider = waffle.provider;
   const [wallet, alice, bob, carol] = provider.getWallets()
   let ct: Contract, sb: Contract, sc: Contract
   let mockBEP20: Contract
@@ -60,6 +61,36 @@ describe("SousChef", function () {
     assert.equal(
       (await mockBEP20.balanceOf(sc.address)).toString(),
       '10'
+    );
+  })
+
+  it('test deposit with block advancement', async () => {
+    // transfer from owner to bob
+    await mockBEP20.transfer(bob.address, '1000');
+    assert.equal((await mockBEP20.balanceOf(bob.address)).toString(), '1000');
+    // transfer from owner to alice
+    await mockBEP20.transfer(alice.address, '1000');
+    assert.equal((await mockBEP20.balanceOf(alice.address)).toString(), '1000');
+
+    await mockBEP20.connect(bob).approve(sc.address, '1000');
+    await mockBEP20.connect(alice).approve(sc.address, '1000');
+
+    // deposit from bob to SousChef
+    await sc.connect(bob).deposit('10');
+    
+    for (let i = 0; i < 300; i++) {
+      await provider.send("evm_mine",[]);
+    }
+
+    // deposit from alice to SousChef
+    await sc.connect(alice).deposit('30');
+    assert.equal(
+      (await mockBEP20.balanceOf(sc.address)).toString(),
+      '40'
+    );
+    assert.equal(
+      (await sc.pendingReward(bob.address)).toString(),
+      '1040'
     );
   })
 })
