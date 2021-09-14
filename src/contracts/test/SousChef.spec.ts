@@ -37,6 +37,7 @@ describe("SousChef", function () {
   it('test', async () => {
     // this will give misleading error below
     // Error: cannot estimate gas; transaction may fail or may require manual gas limit 
+    // the actual reason is "the account sending the transaction holds no ether"
     await sb.transfer(bob.address, '1000', { from: wallet.address })
   })
 
