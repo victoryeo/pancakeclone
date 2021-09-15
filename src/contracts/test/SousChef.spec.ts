@@ -72,8 +72,8 @@ describe("SousChef", function () {
     await mockBEP20.transfer(alice.address, '1000');
     assert.equal((await mockBEP20.balanceOf(alice.address)).toString(), '1000');
 
-    await mockBEP20.connect(bob).approve(sc.address, '1000');
-    await mockBEP20.connect(alice).approve(sc.address, '1000');
+    await mockBEP20.connect(bob).approve(sc.address, '1100');
+    await mockBEP20.connect(alice).approve(sc.address, '1100');
 
     // deposit from bob to SousChef
     await sc.connect(bob).deposit('10');
