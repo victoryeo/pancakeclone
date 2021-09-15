@@ -27,15 +27,26 @@ export const Pool = () => {
 
   const dispatch = useDispatch()
 
-  return (<Wrapper>
-    <div>{pname}</div>
-    <input value={input} onInput={e => setInput((e.target as HTMLTextAreaElement).value)}/>
-    <button onClick={() => {
-      setPname(input)
-      dispatch(STPupdateDummy(input))
-    }}>
-      Update Pool
-    </button>    
-    </Wrapper>)
+  return (
+    <Wrapper>
+      <h1>
+        Syrup Pools
+      </h1>
+      <h2>
+      Just stake some tokens to earn.
+      </h2>
+      <h2>
+      High APR, low risk
+      </h2>
+      <div>{pname}</div>
+      <input value={input} onInput={e => setInput((e.target as HTMLTextAreaElement).value)}/>
+      <button onClick={() => {
+        setPname(input)
+        dispatch(STPupdateDummy(input))
+      }}>
+        Update Pool
+      </button>    
+    </Wrapper>
+  )
 
 }
