@@ -33,13 +33,6 @@ const Farms = lazy(() => import('./views/Farms'))
 const FarmAuction = lazy(() => import('./views/FarmAuction'))
 const NotFound = lazy(() => import('./views/NotFound'))
 const Collectibles = lazy(() => import('./views/Collectibles'))
-const Teams = lazy(() => import('./views/Teams'))
-const Team = lazy(() => import('./views/Teams/Team'))
-const Profile = lazy(() => import('./views/Profile'))
-const TradingCompetition = lazy(() => import('./views/TradingCompetition'))
-const Predictions = lazy(() => import('./views/Predictions'))
-const PredictionsLeaderboard = lazy(() => import('./views/Predictions/Leaderboard'))
-const Voting = lazy(() => import('./views/Voting'))
 const Proposal = lazy(() => import('./views/Voting/Proposal'))
 const CreateProposal = lazy(() => import('./views/Voting/CreateProposal'))
 const AddLiquidity = lazy(() => import('./views/AddLiquidity'))
@@ -83,27 +76,7 @@ const App: React.FC = () => {
             <Route path="/collectibles">
               <Collectibles />
             </Route>
-            <Route exact path="/teams">
-              <Teams />
-            </Route>
-            <Route path="/teams/:id">
-              <Team />
-            </Route>
-            <Route path="/profile">
-              <Profile />
-            </Route>
-            <Route path="/competition">
-              <TradingCompetition />
-            </Route>
-            <Route exact path="/prediction">
-              <Predictions />
-            </Route>
-            <Route path="/prediction/leaderboard">
-              <PredictionsLeaderboard />
-            </Route>
-            <Route exact path="/voting">
-              <Voting />
-            </Route>
+
             <Route exact path="/voting/proposal/create">
               <CreateProposal />
             </Route>
