@@ -60,45 +60,12 @@ const HarvestCard = () => {
                 {preText}
               </Text>
             )}
-            {!earningsBusd.isNaN() ? (
-              <Balance
-                decimals={earningsBusd.gt(0) ? 2 : 0}
-                fontSize="24px"
-                bold
-                prefix={earningsBusd.gt(0) ? '~$' : '$'}
-                lineHeight="1.1"
-                value={earningsBusd.toNumber()}
-              />
-            ) : (
-              <Skeleton width={96} height={24} my="2px" />
-            )}
-            <Text mb={['16px', null, null, '0']} color="textSubtle">
-              {toCollectText}
-            </Text>
+            
+            <Text>Welcome</Text>
+            
+
           </Flex>
-          {numTotalToCollect <= 0 ? (
-            <Link href="farms">
-              <Button width={['100%', null, null, 'auto']} variant="secondary">
-                <Text color="primary" bold>
-                  {t('Start earning')}
-                </Text>
-                <ArrowForwardIcon ml="4px" color="primary" />
-              </Button>
-            </Link>
-          ) : (
-            <Button
-              width={['100%', null, null, 'auto']}
-              id="harvest-all"
-              isLoading={pendingTx}
-              endIcon={pendingTx ? <AutoRenewIcon spin color="currentColor" /> : null}
-              disabled={pendingTx}
-              onClick={harvestAllFarms}
-            >
-              <Text color="invertedContrast" bold>
-                {pendingTx ? t('Harvesting') : t('Harvest all')}
-              </Text>
-            </Button>
-          )}
+         
         </Flex>
       </CardBody>
     </StyledCard>
