@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { STPupdateDummy } from '../actions/actions'
 import { RootState } from '../reducers'
-import { GetCake, GetContract } from '../contracts/getContracts'
+import { GetCake, GetSousChef } from '../contracts/getContracts'
 import { useHistory } from "react-router-dom";
 import connectMetamaskWallet from "../web3/connectMetamaskWallet";
 import { STPupdateAcct } from '../actions/actions'
@@ -20,6 +20,7 @@ export const Pool: React.FC = () => {
   const [enableStatus, setEnableStatus] = useState<boolean>(false);
   const dummy:string = useSelector((state: RootState) => state.reducers.dummy)
   let testCake: any
+  let testSC: any
   const acct = useSelector((state: RootState) => state.reducers.acct)
   console.log(acct)
   const history = useHistory();
@@ -39,6 +40,16 @@ export const Pool: React.FC = () => {
     }
   }) 
   fetchMyCake()
+  
+  const fetchSousChef = (async () => {
+    testSC = await GetSousChef()
+    if (testSC != null) {
+      console.log('souschef loaded')
+    } else {
+      history.push("/");
+    }
+  }) 
+  fetchSousChef()
 
   const enableMyCake = (async () => {
     console.log(acct)
