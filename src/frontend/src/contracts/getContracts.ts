@@ -6,6 +6,12 @@ import tokens from '../config/constants/tokens'
 export const GetCake = async () => {
   const web3: any = useSelector((state: RootState) => state.reducers.web3)
   console.log(web3)
+  if (web3.eth == undefined)
+  { 
+    console.log('web3 undefined')
+    return null;
+  }
+
   let accounts: any = await web3.eth.getAccounts()
   console.log(accounts[0])
 

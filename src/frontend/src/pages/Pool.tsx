@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { STPupdateDummy } from '../actions/actions'
 import { RootState } from '../reducers'
 import { GetCake, GetContract } from '../contracts/getContracts'
+import { useHistory } from "react-router-dom";
 
 const Wrapper = styled.div`
   margin-top: 1em;
@@ -18,19 +19,26 @@ export const Pool: React.FC = () => {
   let testCake: any
   const acct = useSelector((state: RootState) => state.reducers.acct)
   console.log(acct)
+  const history = useHistory();
 
   const fetchMyCake = (async () => {
     testCake = await GetCake()
-    let currentVote = await testCake.methods.getOwner().call()
-    console.log(currentVote)
-    currentVote = await testCake.methods.getCurrentVotes(acct).call()
-    console.log(currentVote)
+    if (testCake != null) {
+      let currentVote = await testCake.methods.getOwner().call()
+      console.log(currentVote)
+      currentVote = await testCake.methods.getCurrentVotes(acct).call()
+      console.log(currentVote)
+    } else {
+      history.push("/");
+    }
   }) 
   fetchMyCake()
 
   const enableMyCake = (async () => {
-    let result = await testCake.methods.approve(acct, 1000).send({from: acct})
-    console.log(result)
+    if (testCake != null) {
+      let result = await testCake.methods.approve(acct, 1000).send({from: acct})
+      console.log(result)
+    }
   })
 
   useEffect(() => {
