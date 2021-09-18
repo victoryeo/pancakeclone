@@ -3,7 +3,7 @@ import { RootState } from '../reducers/index';
 import cakeAbi from '../config/abi/cake.json'
 import tokens from '../config/constants/tokens'
 
-export const useCake = async () => {
+export const GetCake = async () => {
   const web3: any = useSelector((state: RootState) => state.reducers.web3)
   console.log(web3)
   let accounts: any = await web3.eth.getAccounts()
@@ -13,8 +13,13 @@ export const useCake = async () => {
   let address: string = tokens.cake.address[chainId]
   console.log(address)
 
-  let cakeInst: number = await new web3.eth.Contract(
+  let cakeInst: any = await new web3.eth.Contract(
     cakeAbi, address
   )
   console.log(cakeInst)
+  return cakeInst
+}
+
+export const GetContract = async () => {
+  return "contract"
 }

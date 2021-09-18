@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useCallback} from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { STPupdateDummy } from '../actions/actions'
 import { RootState } from '../reducers'
-import { useCake } from '../contracts/useContracts'
+import { GetCake, GetContract } from '../contracts/getContracts'
 
 const Wrapper = styled.div`
   margin-top: 1em;
@@ -11,11 +11,27 @@ const Wrapper = styled.div`
   margin-right: 6em;
 `;
 
-export const Pool = () => {
+export const Pool: React.FC = () => {
   const [pname, setPname] = useState<string|null>(null);
   const [input, setInput] = useState<string>('');
   const dummy:string = useSelector((state: RootState) => state.reducers.dummy)
-  const cakeContract = useCake()
+  let testCake: any
+  const acct = useSelector((state: RootState) => state.reducers.acct)
+  console.log(acct)
+
+  const fetchMyCake = (async () => {
+    testCake = await GetCake()
+    let currentVote = await testCake.methods.getOwner().call()
+    console.log(currentVote)
+    currentVote = await testCake.methods.getCurrentVotes(acct).call()
+    console.log(currentVote)
+  }) 
+  fetchMyCake()
+
+  const enableMyCake = (async () => {
+    let result = await testCake.methods.approve(acct, 1000).send({from: acct})
+    console.log(result)
+  })
 
   useEffect(() => {
     console.log('Pool mounted');
@@ -38,6 +54,14 @@ export const Pool = () => {
       <h2>
       High APR, low risk
       </h2>
+
+      <button onClick={() => {
+        console.log(testCake.methods)
+        enableMyCake()
+      }}>
+        Enable Pool
+      </button> 
+      <p/>
       <div>{pname}</div>
       <input value={input} onInput={e => setInput((e.target as HTMLTextAreaElement).value)}/>
       <button onClick={() => {
@@ -45,7 +69,7 @@ export const Pool = () => {
         dispatch(STPupdateDummy(input))
       }}>
         Update Pool
-      </button>    
+      </button>
     </Wrapper>
   )
 
