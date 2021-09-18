@@ -39,12 +39,12 @@ describe("SousChef", function () {
     // this will give misleading error below
     // Error: cannot estimate gas; transaction may fail or may require manual gas limit 
     // the actual reason is "the account sending the transaction holds no ether"
-    await sb.transfer(bob.address, '1000', { from: wallet.address })
+    //await sb.transfer(bob.address, '1000', { from: wallet.address })
   })
 
   it('test transfer', async () => {
     let bal = await mockBEP20.balanceOf(wallet.address)
-    console.log(bal.toString())
+    console.log(`balance ${bal.toString()}`)
     // transfer from owner to bob using mockBEP20 contract
     await mockBEP20.transfer(bob.address, '1000');
     assert.equal((await mockBEP20.balanceOf(bob.address)).toString(), '1000');
