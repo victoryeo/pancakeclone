@@ -26,8 +26,10 @@ export const Pool: React.FC = () => {
     if (testCake != null) {
       let currentVote = await testCake.methods.getOwner().call()
       console.log(currentVote)
-      currentVote = await testCake.methods.getCurrentVotes(acct).call()
-      console.log(currentVote)
+      if (acct != undefined) {
+        currentVote = await testCake.methods.getCurrentVotes(acct).call()
+        console.log(currentVote)
+      } 
     } else {
       history.push("/");
     }
@@ -35,7 +37,8 @@ export const Pool: React.FC = () => {
   fetchMyCake()
 
   const enableMyCake = (async () => {
-    if (testCake != null) {
+    console.log(acct)
+    if (testCake != null && acct != undefined) {
       let result = await testCake.methods.approve(acct, 1000).send({from: acct})
       console.log(result)
     }
