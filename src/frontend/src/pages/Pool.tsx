@@ -17,6 +17,7 @@ const Wrapper = styled.div`
 export const Pool: React.FC = () => {
   const [pname, setPname] = useState<string|null>(null);
   const [input, setInput] = useState<string>('');
+  const [enableStatus, setEnableStatus] = useState<boolean>(false);
   const dummy:string = useSelector((state: RootState) => state.reducers.dummy)
   let testCake: any
   const acct = useSelector((state: RootState) => state.reducers.acct)
@@ -42,8 +43,16 @@ export const Pool: React.FC = () => {
   const enableMyCake = (async () => {
     console.log(acct)
     if (testCake != null && acct != undefined) {
-      let result = await testCake.methods.approve(acct, 1000).send({from: acct})
-      console.log(result)
+      try {
+        let tx = await testCake.methods.approve(acct, 1000).send({from: acct})
+        console.log(tx)
+        if (tx.status === true) {
+          console.log('enable success')
+          setEnableStatus(true)
+        }
+      } catch (error: any) {
+        console.log(error)
+      }
     } else if (acct == undefined || acct == 0) {
       let userAddr: number = await connectMetamaskWallet()
       console.log(userAddr)
@@ -59,6 +68,20 @@ export const Pool: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  let buttonEnable
+  let inputBox
+  if (enableStatus == true) {
+    inputBox=<input value={input} onInput={e => setInput((e.target as HTMLTextAreaElement).value)}/>
+    buttonEnable = <button onClick={() => {
+      setPname(input)
+      dispatch(STPupdateDummy(input))
+    }}>{enableStatus? "Stake Pool": ""}
+    </button>
+  } else {
+    inputBox=''
+    buttonEnable = ''
+  }
+
   return (
     <Wrapper>
       <h1>
@@ -72,20 +95,15 @@ export const Pool: React.FC = () => {
       </h2>
 
       <button onClick={() => {
-        console.log(testCake.methods)
+        //console.log(testCake.methods)
         enableMyCake()
       }}>
          {acct ? "Enable Pool" : "Connect"}
       </button> 
       <p/>
-      <div>{pname}</div>
-      <input value={input} onInput={e => setInput((e.target as HTMLTextAreaElement).value)}/>
-      <button onClick={() => {
-        setPname(input)
-        dispatch(STPupdateDummy(input))
-      }}>
-        Update Pool
-      </button>
+      {inputBox}
+      {buttonEnable}
+     
     </Wrapper>
   )
 
