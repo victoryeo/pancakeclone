@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import connectMetamaskWallet from "../web3/connectMetamaskWallet";
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../reducers'
 
 interface CWProps {
 }
@@ -8,50 +10,36 @@ interface CWState {
   selectedAddress?: number;
 }
 
-export class ConnectWallet extends React.Component<CWProps, CWState> {
-  constructor(props: any) {
-    super(props)
-    this.state = {
-      selectedAddress: undefined
-    }
-  }
+export const ConnectWallet: React.FC = () => {
+  const [selectedAddress, setSelectedAddress] = useState<string|undefined>(undefined);
 
-  changeAddress = (address: number) => {
-    this.setState({
-      selectedAddress: address  
-    })
-  }
-
-  connectWallet = async() => {
+  const connectWallet = async() => {
     let userAddr
-    console.log(this.state.selectedAddress)
-    if (this.state.selectedAddress === undefined) {
+    console.log(selectedAddress)
+    if (selectedAddress === undefined) {
       userAddr = await connectMetamaskWallet()
     } 
     console.log(userAddr)
-    this.setState({selectedAddress: userAddr})
+    setSelectedAddress(userAddr)
   }
 
-  render() {
-    return (
-      <div className='top'> 
-        
-        <div className='right'> 
-          <div className="icons">
+  return (
+    <div className='top'> 
+      <div className='right'> 
+        <div className="icons">
+        </div>
 
-          </div>
-
-          <div className="btn-main">
-            <button
-              className="btn btn-warning"
-              type="button"
-              onClick={this.connectWallet}
-            >
-              {this.state.selectedAddress ? this.state.selectedAddress : "Connect"}
-            </button>
-          </div>
+        <div className="btn-main">
+          <button
+            className="btn btn-warning"
+            type="button"
+            onClick={connectWallet}
+          >
+            {selectedAddress ? selectedAddress : "Connect"}
+          </button>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+
 }
