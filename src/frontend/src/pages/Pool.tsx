@@ -5,6 +5,8 @@ import { STPupdateDummy } from '../actions/actions'
 import { RootState } from '../reducers'
 import { GetCake, GetContract } from '../contracts/getContracts'
 import { useHistory } from "react-router-dom";
+import connectMetamaskWallet from "../web3/connectMetamaskWallet";
+import { STPupdateAcct } from '../actions/actions'
 
 const Wrapper = styled.div`
   margin-top: 1em;
@@ -20,6 +22,7 @@ export const Pool: React.FC = () => {
   const acct = useSelector((state: RootState) => state.reducers.acct)
   console.log(acct)
   const history = useHistory();
+  const dispatch = useDispatch()
 
   const fetchMyCake = (async () => {
     testCake = await GetCake()
@@ -41,6 +44,10 @@ export const Pool: React.FC = () => {
     if (testCake != null && acct != undefined) {
       let result = await testCake.methods.approve(acct, 1000).send({from: acct})
       console.log(result)
+    } else if (acct == undefined || acct == 0) {
+      let userAddr: number = await connectMetamaskWallet()
+      console.log(userAddr)
+      dispatch(STPupdateAcct(userAddr))
     }
   })
 
@@ -51,8 +58,6 @@ export const Pool: React.FC = () => {
     // the line below is used to fix warning message: React Hook useEffect has a missing dependency
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const dispatch = useDispatch()
 
   return (
     <Wrapper>
@@ -70,7 +75,7 @@ export const Pool: React.FC = () => {
         console.log(testCake.methods)
         enableMyCake()
       }}>
-        Enable Pool
+         {acct ? "Enable Pool" : "Connect"}
       </button> 
       <p/>
       <div>{pname}</div>
