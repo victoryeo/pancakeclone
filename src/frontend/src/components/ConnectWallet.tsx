@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import connectMetamaskWallet from "../web3/connectMetamaskWallet";
+import disconnectMetamaskWallet from "../web3/disconnectMetamaskWallet";
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../reducers'
+import { STPupdateAcct } from '../actions/actions'
 
 interface CWProps {
 }
@@ -11,15 +13,21 @@ interface CWState {
 }
 
 export const ConnectWallet: React.FC = () => {
-  const [selectedAddress, setSelectedAddress] = useState<string|undefined>(undefined);
+  const [selectedAddress, setSelectedAddress] = useState<number|undefined>(undefined);
+  const acct = useSelector((state: RootState) => state.reducers.acct)
+  console.log(acct)
+  const dispatch = useDispatch()
 
   const connectWallet = async() => {
     let userAddr
     console.log(selectedAddress)
-    if (selectedAddress === undefined) {
+    if (acct === undefined) {
       userAddr = await connectMetamaskWallet()
-    } 
+    } else {
+      userAddr = await disconnectMetamaskWallet()
+    }
     console.log(userAddr)
+    dispatch(STPupdateAcct(userAddr))
     setSelectedAddress(userAddr)
   }
 
@@ -35,7 +43,7 @@ export const ConnectWallet: React.FC = () => {
             type="button"
             onClick={connectWallet}
           >
-            {selectedAddress ? selectedAddress : "Connect"}
+            {acct ? acct : "Connect"}
           </button>
         </div>
       </div>
