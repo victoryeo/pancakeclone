@@ -44,6 +44,7 @@ export const Pool: React.FC = () => {
   const fetchSousChef = (async () => {
     testSC = await GetSousChef()
     if (testSC != null) {
+      console.log(testSC.methods)
       console.log('souschef loaded')
     } else {
       history.push("/");
@@ -71,6 +72,18 @@ export const Pool: React.FC = () => {
     }
   })
 
+  const stakeSousChef = (async () => {
+    console.log(acct)
+    if (testSC != null && acct != undefined) {
+      try {
+        let tx = await testSC.methods.deposit(10).send({from: acct})
+        console.log(tx)
+      } catch (error: any) {
+        console.log(error)
+      }
+    }
+  })
+
   useEffect(() => {
     console.log('Pool mounted');
     setPname(dummy)
@@ -86,6 +99,7 @@ export const Pool: React.FC = () => {
     buttonEnable = <button onClick={() => {
       setPname(input)
       dispatch(STPupdateDummy(input))
+      stakeSousChef()
     }}>{enableStatus? "Stake Pool": ""}
     </button>
   } else {

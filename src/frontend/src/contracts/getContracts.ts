@@ -46,7 +46,7 @@ export const GetSousChef = async () => {
   console.log(address)
 
   let sousChefInst: any = await new web3.eth.Contract(
-    cakeAbi, address
+    sousChefAbi, address
   )
   console.log(sousChefInst)
   return sousChefInst
