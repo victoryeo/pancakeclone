@@ -57,4 +57,23 @@ describe("MasterChef", function () {
     assert.equal((await cake.balanceOf(alice.address)).toString(), '750');
   })
 
+  it('test staking with block advancement', async () => {
+    await mc.connect(minter).add('2000', lp1.address, true)
+    for (let i = 0; i < 170; i++) {
+      await provider.send("evm_mine",[]);
+    }
+
+    await lp1.connect(alice).approve(mc.address, '1000');
+    assert.equal((await cake.balanceOf(alice.address)).toString(), '0');
+    await mc.connect(alice).deposit(1, '20');
+    await mc.connect(alice).withdraw(1, '20');
+   
+    // alice enter staking
+    await cake.connect(alice).approve(mc.address, '1000');
+    await mc.connect(alice).enterStaking('20');
+    await mc.connect(alice).enterStaking('0');
+    await mc.connect(alice).enterStaking('0');
+    assert.equal((await cake.balanceOf(alice.address)).toString(), '1228');
+  })
+
 })
